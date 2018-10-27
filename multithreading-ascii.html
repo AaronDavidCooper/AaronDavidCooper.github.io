@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <!-- Site made with Mobirise Website Builder v4.8.6, https://mobirise.com -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v4.8.6, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/logo2.png" type="image/x-icon">
+  <meta name="description" content="Website Builder Description">
+  <title>Aaron's Profile</title>
+  <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="assets/tether/tether.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/socicon/css/styles.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+  
+  
+  
+</head>
+<body>
+  <section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-3">
+
+    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <div class="menu-logo">
+            <div class="navbar-brand">
+                <span class="navbar-buttons">
+                    <a href="http://www.aarondavidcooper.co.uk"><font color="white">Homepage</font></a>
+                </span>
+                <span class="navbar-caption-wrap">
+         
+                </span>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                <li class="nav-item">
+      
+                </li>
+                <li class="nav-item">
+          
+                </li>
+            </ul>
+            <div class="navbar-buttons mbr-section-btn">
+                <h6><a href="https://github.com/AaronDavidCooper"><font color="white">https://github.com/AaronDavidCooper</font></a></h6>
+            </div>
+        </div>
+    </nav>
+</section>    
+
+
+
+
+
+
+
+
+<section class="features11 cid-r6SbAhrkAl" id="features11-6">
+
+    <div class="container">   
+        <div class="col-md-12">
+            <hr>
+            <div class="media-container-row">
+                <div class="mbr-figure" style="width: 100%;">
+                    <h4 class="mbr-title pt-2 mbr-fonts-style display-2">
+                        Multi-threading & Concurrency - Ascii Art 
+                    
+                    </h4>
+                    
+                    <hr>
+                    <img src="assets/images/ascii%20image.jpg">
+                    <hr>
+                    
+                    <p class="block-text mbr-fonts-style display-7">
+                                    <b>[Follow up from Ascii to Art]</b>
+                                    <br><br>
+                                    One of the issues I encountered during my previous project, was the time it took to process high resolution images. I made a work-around on the last project by downscaling the images before processing it, but I knew this could be improved by implementing multi-threading.
+                                    <br><br>
+                                    So first of all, I reviewed my code and was able to improve it by populating all of the arrays within one loop, rather than two as previous, which helped speed it up slightly. I then had to decide how I was going to do distibute the workload to each worker and settled on the below solution. As you can see, I pass the array through to each worker, providing them each with a equal but unique chunk/section to process. The only exception being the last worker, who also processes the remaining indexes that couldn't be split out. 
+                                    <br><br>
+                                    <img src="assets/images/workerPayloadDistribution.png">                    
+                                    <br>
+                                    Each worker is also given a unique ID (which comes in handy later!) and a couple other parameters required to complete their task, which in case you didn't watch the previous video, are the following;<br>
+                                    ■ Arraylist of brightness value of each pixel<br>
+                                    ■ Arraylist of hex color of each pixel<br>
+                                    ■ Arraylist of ASCII representation of each pixel (ie. ;Il!i~+_$#)<br>
+                                    <br> 
+                                    I decided to have the Worker class implement Callable&lt;V&gt; so that I could return a value. The value needed to contain all 3 arrays, so I could've passed an array of arrays but I also needed to know <i>which</i> array was which. So I settled on using a Map&lt;String, List&lt;Object&gt;&gt; so I could give each key to identify them later.<br><br>
+                                    <img src="assets/images/workerTask.png">
+                                    <br>
+                                    So once all of the above work has been completed, I'm left with 10 (that's how many workers/threads I chose) Map's all containing a section of the original array, processed into 3 Lists. So now I was left with the task of combining these Lists togethor, in the correct order, so that I could use this data as intended. This is where the unique ID that I gave each worker earlier comes in handy, as well as the 'key' I had given in the Map to represent each List. 
+                                    <br><br><img src="assets/images/rebuildingWorkersData.png">
+                                    <br>
+                        Overall I am happy with the results, as you may have seen on the overview, I was able to reduce the processing time from <b>24 seconds</b> down to <b>under 10 seconds!</b> The image in question was 7.86MB large, dimensions of 4524x3016 with 300dpi.  
+                                    <br>
+                               
+                                
+                    </p>
+                    
+                </div>
+
+                </div>
+            </div>
+        <hr>
+    </div>     
+</section>
+
+
+  <script src="assets/web/assets/jquery/jquery.min.js"></script>
+  <script src="assets/popper/popper.min.js"></script>
+  <script src="assets/tether/tether.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/smoothscroll/smooth-scroll.js"></script>
+  <script src="assets/dropdown/js/script.min.js"></script>
+  <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
+  <script src="assets/theme/js/script.js"></script>
+  
+  
+</body>
+</html>
