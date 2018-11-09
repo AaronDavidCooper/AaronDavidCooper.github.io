@@ -31,7 +31,7 @@ var chatResetTimer
   this.setup = function(){
       // Connecting to server
       //socket = new WebSocket("ws://127.0.0.1:9999");
-      socket = new WebSocket("ws://3.8.114.102:9999");
+      socket = new WebSocket("wss://3.8.114.102:9999");
       user = new User();
       user.initials = document.getElementById('initialElement').innerHTML;
       socket.onmessage = e => this.messageHandler(e);
