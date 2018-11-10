@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <!-- Site made with Mobirise Website Builder v4.8.6, https://mobirise.com -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v4.8.6, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/logo2.png" type="image/x-icon">
+  <meta name="description" content="Website Builder Description">
+  <title>Aaron's Profile</title>
+  <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="assets/tether/tether.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/socicon/css/styles.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  
+  
+</head>
+<body>
+  <section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-3">
+
+    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <div class="menu-logo">
+            <div class="navbar-brand">
+                <span class="navbar-buttons">
+                    <a href="http://www.aarondavidcooper.co.uk"><font color="white">Homepage</font></a>
+                </span>
+                <span class="navbar-caption-wrap">
+         
+                </span>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                <li class="nav-item">
+      
+                </li>
+                <li class="nav-item">
+          
+                </li>
+            </ul>
+            <div class="navbar-buttons mbr-section-btn">
+                <h6><a href="https://github.com/AaronDavidCooper"><font color="white">https://github.com/AaronDavidCooper</font></a></h6>
+            </div>
+        </div>
+    </nav>
+</section>    
+
+
+
+
+
+
+
+
+<section class="features11 cid-r6SbAhrkAl" id="features11-6">
+
+    <div class="container">   
+        <div class="col-md-12">
+            <hr>
+            <div class="media-container-row">
+                <div class="mbr-figure" style="width: 100%;">
+                    <h4 class="mbr-title pt-2 mbr-fonts-style display-2">
+                        WebSockets - Online Multiplayer Maze
+                    
+                    </h4>
+                    
+                    <hr>
+                    <img src="assets/images/maze-escape-header.png">
+                    <hr>
+                    
+                    <p class="block-text mbr-fonts-style display-7">
+                                    <b>[A multiplayer maze complete with obstacle collison, server side enemies, chat system & more!]</b>
+                                    <br><br>
+                                    <a href="http://maze-escape.blogdrop.eu/MazeEscapeGame/webpage/" style="color:deepskyblue">Try 'Maze Escape' yourself!</a><br><br>
+                                    <b>Server Host </b>: Amazon Web Services (EC2 Server running compiled JAR with dependancies)<br>
+                                    <b>Client Host </b>: Hostdrop.eu
+                                    <br><br>
+                                    In this write up I'll be running through some of the key features in this project for both the backend and frontend. 
+                                    <br><br>
+                                    I appreciate everything won't be explained in the below area, for example how does the client know <i>what</i> type of data it's receiving from the server? (Is it maze data, other users data, enemy locations, etc?). So if there are any unexplained components you're interested in learning about, please feel free to contact me and I will gladfully explain. 
+                                    <br><br>
+                    </p>
+                    <p class="block-text mbr-fonts-style display-2"><b><u><i>Server Side</i></u></b></p> 
+                               
+                                    <button onclick="myFunction('server1')" class="w3-button w3-block w3-left-align w3-light-grey">
+                                        <p class="block-text mbr-fonts-style display-7">                    
+                                             <b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;■ Parsing of Maze data & distribution to clients</b><br>                    
+                                        </p>                      
+                                    </button>
+                                        <div id="server1" class="w3-hide w3-container">
+                                          <p>One of the features I wanted was the ability for the server to specify the maze, so my initial plan was to create a CSV file where I plot the co-ordinates and the server would distribute the data to the clients accordingly. I quickly saw the flaw in this when I was faced with plotting out an entire maze by hand, far too time consuming!<br><br>
+                                             I decided to take a look into how to generate a maze and spent a few hours reading into recursive backtracking and some of the other alogirthms used for Mazes. Once I had a decent understanding of how it worked and knew I could adjust it to suit my needs, I expanded one of the many code examples I'd seen and altered it so that it would generate a JSON file with the relevant data. <br><br>
+                                              <img src="assets/images/maze-generation.png"><br>
+                                              This worked as intended however there was still one more obstacle to get past, which was the conversion of a maze cell to individual walls with X,Y positions. Below you can see a snippet of the JSON file generated, to solve this I looped through each cell, checking which walls were 'true'. I then created a wall based on their position cell position and also their wall position (Ie, right side wall would be X1,Y -> X1,Y1) which was multiplied by a variable called 'scale' to create the pixel distance of each wall.<br><br>
+                                              <img src="assets/images/maze-json.png"><br>
+                                              Once that was completed, I just set the server to parse through the JSON file when it was launched, then when the websocket receives an connection (onOpen), I used GSON to convert the array of walls to a string and sent the new client the maze data.
+                                          </p>
+                                        </div>
+                    
+                                    <button onclick="myFunction('server2')" class="w3-button w3-block w3-left-align w3-light-grey">
+                                        <p class="block-text mbr-fonts-style display-7">                    
+                                             <b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;■ User assigned features</b><br>                    
+                                        </p>                      
+                                    </button>
+                                        <div id="server2" class="w3-hide w3-container">
+                                          <p>So in the previous section I mentioned that users receive the maze details when they connect, but there are a couple more components to this. I wanted to ensure each user was given a unique color when connecting, as this helps easily identify who each person while you're moving through the maze quickly. To do this, when a user connects, they get given a random index number based on the 18 colors availables (this can be increased). The server checks this index isn't in use by comparing it against the colorLock hashset, if it has been used, the server re-rolls a new index position until it finds a color that's not in use, assigns the user that color and adds it to the colorLock.<br><br>
+                                              <img src="assets/images/maze-server-color.png"><br>
+                                              
+                                            Another attribute given to the user is an attachment to their connection, this attachment is a server based POJO containing their UserID & color. This is required because although the connections have a unique ID, we need to be able to inform all the other clients about this users color, otherwise the clients would lose their color when receiving an update/relay from the server.
+                                            </p>
+                                        </div>
+                    
+                                    <button onclick="myFunction('server3')" class="w3-button w3-block w3-left-align w3-light-grey">
+                                        <p class="block-text mbr-fonts-style display-7">                    
+                                             <b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;■ Location based enemies (NPC's)</b><br>                    
+                                        </p>                      
+                                    </button>
+                                        <div id="server3" class="w3-hide w3-container">
+                                          <p>One of the more interesting features I added to this project was server sided objects, I wanted to implement an element of challenge into completing the maze so I introduced flying discs that send you back to the begining if you get hit by them... So first off I found a royalty free image from opengameart.org and built a POJO that represents an ellipse with the same diameter. Now that we had the object setup, it was time to populate them and move them across the canvas.<br><br> 
+                                              
+                                              <img src="assets/images/maze-populateandmove-discs.png"><br>
+                                              
+                                              As you can see, I have a variable that lets me assign the number of discs I want to spawn. We then create a loop that generates a disc corresponding to this number, each disc requires an X position (which I set to the length of the maze, minus their radius) and a Y position, which is randomly generated. The final 2 parameters are a speed variable and also a uniqueID, which is needed for removing the disc when the client hits them with their laser.<br><br>
+                                              
+                                              I then had to replicate movement, so I have a function called moveDiscs, which loops through the discs and moves them by their set speed. This also caused the need for a direction variable on the disc class, so they do not run outside the maze. So I added this to the disc class and send them the mazesize when they move, so if their next movement is outside this parameter, they change direction instead. <br><br>
+                                              
+                                              The final thing to add was in relation to the client side, as I mentioned earlier I have designed this project so that the user can shoot the discs down. When the user hits a disc, they send the discId to the server and it calls a function 'resetDisc', this basically removes the corresponding disc from the servers array of discs and adds a new disc at a random location.<br><br>
+                                              
+                                              So that's it right?... Well not quite!<br><br>
+                                              
+                                              I wanted to check the performance of these new additions, so I relayed my server through a host in America and had myself and a friend test the performance. Once I spawned 200 discs, an issue became quite apparent. The high bandwidth of 200 positions being updated every 16ms was causing a high latency, which in turn was causing a de-sync between the server discs X,Y position and the clients disc positions. To resolve this issue, I changed how the server updates the clients regarding the disc positions. Instead of sending each client all of the discs positions and updating them constantly, I have the server check the users X,Y position and send them the discs that are within a nearby distance to them, greatly reducing the incoming data on the client end!<br><br>
+                                              
+                                              To showcase this, below is footage of the game on a high res monitor (1440p) and you can see the enemies don't show until their within a 1000 pixel range. This value can be adjust or I could have the user send their screenwidth upon connecting, to ensure each user get's the completely experience.
+                                              <img src="assets/images/server-npc-distance-relay.gif">
+                                            
+                                            </p>
+                                        </div>                    
+                    
+                                    <button onclick="myFunction('server4')" class="w3-button w3-block w3-left-align w3-light-grey">
+                                        <p class="block-text mbr-fonts-style display-7">                    
+                                             <b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;■ Client relay & disconnects - *** TBC ***</b><br>                    
+                                        </p>                      
+                                    </button>
+                                        <div id="server4" class="w3-hide w3-container">
+                                          <p>Content..</p>
+                                        </div>
+                    
+                         <br><br>
+                    <p class="block-text mbr-fonts-style display-2"><b><u><i>Client Side</i></u></b></p> 
+
+                                                        <button onclick="myFunction('client1')" class="w3-button w3-block w3-left-align w3-light-grey">
+                                        <p class="block-text mbr-fonts-style display-7">                    
+                                             <b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;■ User Input *** TBC ***</b><br>                    
+                                        </p>                      
+                                    </button>
+                                        <div id="client1" class="w3-hide w3-container">
+                                          <p>Content..</p>
+                                        </div>
+                    
+                                    <button onclick="myFunction('client2')" class="w3-button w3-block w3-left-align w3-light-grey">
+                                        <p class="block-text mbr-fonts-style display-7">                    
+                                             <b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;■ Visual display *** TBC ***</b><br>                    
+                                        </p>                      
+                                    </button>
+                                        <div id="client2" class="w3-hide w3-container">
+                                          <p>Content..</p>
+                                        </div>
+                    
+                                    <button onclick="myFunction('client3')" class="w3-button w3-block w3-left-align w3-light-grey">
+                                        <p class="block-text mbr-fonts-style display-7">                    
+                                             <b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;■ Collision *** TBC ***</b><br>                    
+                                        </p>                      
+                                    </button>
+                                        <div id="client3" class="w3-hide w3-container">
+                                          <p>Content..</p>
+                                        </div>                    
+                    
+                                    <button onclick="myFunction('client4')" class="w3-button w3-block w3-left-align w3-light-grey">
+                                        <p class="block-text mbr-fonts-style display-7">                    
+                                             <b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;■ *** TBC ***</b><br>                    
+                                        </p>                      
+                                    </button>
+                                        <div id="client4" class="w3-hide w3-container">
+                                          <p>Content..</p>
+                                        </div>
+                         <br><br>
+                    
+                </div>
+
+                </div>
+            </div>
+        <hr>
+    </div>     
+</section>
+    <script>
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
+
+  <script src="assets/web/assets/jquery/jquery.min.js"></script>
+  <script src="assets/popper/popper.min.js"></script>
+  <script src="assets/tether/tether.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/smoothscroll/smooth-scroll.js"></script>
+  <script src="assets/dropdown/js/script.min.js"></script>
+  <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
+  <script src="assets/theme/js/script.js"></script>
+  
+  
+</body>
+</html>
