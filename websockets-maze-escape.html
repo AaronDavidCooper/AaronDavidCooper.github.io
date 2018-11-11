@@ -153,11 +153,43 @@
                     
                                     <button onclick="myFunction('server4')" class="w3-button w3-block w3-left-align w3-light-grey w3-border">
                                         <p class="block-text mbr-fonts-style display-7">                    
-                                             <b><br>■ Client relay & disconnects - *** TBC ***</b><br>                    
+                                             <b><br>■ Client relay & disconnects</b><br>                    
                                         </p>                      
                                     </button>
                                         <div id="server4" class="w3-hide w3-container">
-                                          <p>Content..</p>
+                                          <p>So I've discussed some of the features that the server provides, so let's talk about the communication aspect of things. The majority of this happens with the MazeWebSocketServer, which is a class I created that extends WebSocketServer from the org.java-websocket framework. This class has 5 methods which it must implement, so I'll run through each of these in layman's terms to explain what each component does.<br><br>
+                                            
+                                              <b>- public void onOpen(WebSocket conn, ClientHandshake handshake)</b><br>
+                                              &nbsp;&nbsp;<i>Creates a User, assigns color & ID, attaches User to Connection.</i><br>
+                                              &nbsp;&nbsp;<i>Adds User & Connection to array of live users/connections.</i><br>
+                                              &nbsp;&nbsp;<i>Updates NPC relay (for sending enemies) with new connecions array.</i><br>
+                                               &nbsp;&nbsp;<i>Sends the connection their User info & Maze info as JSON files.</i>
+                                              <br><br>
+                                              
+                                              <b>- public void onClose(WebSocket conn, int code, String reason, boolean remote)</b><br>
+                                              &nbsp;&nbsp;<i>Loops through Users, finds User ID that matches connection ID.</i><br>
+                                              &nbsp;&nbsp;<i>Removes user from array, removes colorLock & removes connection.</i><br>
+                                              &nbsp;&nbsp;<i>Updates NPC relay (for sending enemies) with new connecions array.</i><br>
+                                              &nbsp;&nbsp;<i>Sends all other connections a new User list, disconnecting them client side.</i>
+                                              <br><br>
+                                              
+                                              <b>- public void onMessage(WebSocket conn, String message)</b><br>
+                                              &nbsp;&nbsp;<i>Convert client message to a temp. User via GSON.</i><br>
+                                              &nbsp;&nbsp;<i>Loops through Users, finds User ID that matches connection ID.</i><br>
+                                              &nbsp;&nbsp;<i>Updates User with their new details, taken from temp. User.</i><br>
+                                              &nbsp;&nbsp;<i>If the user reports their laser hit a disc, call the function to remove that disc.</i><br>
+                                              &nbsp;&nbsp;<i>Loop through all connections, updating them with this users new details.</i>
+                                              <br><br>
+                                            
+                                              <b>- public void onError(WebSocket conn, Exception ex)</b><br>
+                                              &nbsp;&nbsp;<i>Print out exception</i><br>
+                                              &nbsp;&nbsp;<i>Checks the connection isn't null, then calls onClose to disconnect them.</i>
+                                              <br><br>
+                                              
+                                              <b>- public void onStart()</b><br>
+                                              &nbsp;&nbsp;Starts up npcRelay, this function is only called once upon the server starting.                                         
+                                              
+                                            </p>
                                         </div>
                     
                          <br><br>
