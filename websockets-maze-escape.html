@@ -92,7 +92,7 @@
                                     <br><br>
                                     In this write up I'll be running through some of the key features in this project for both the backend and frontend. 
                                     <br><br>
-                                    I appreciate everything won't be explained in the below area, for example how does the client know <i>what</i> type of data it's receiving from the server? (Is it maze data, other users data, enemy locations, etc?). So if there are any unexplained components you're interested in learning about, please feel free to contact me and I will gladfully explain. 
+                                    I appreciate everything may not be explained in the below area, so if there are any unexplained components you're interested in learning about, please feel free to contact me and I will gladfully explain. 
                                     <br><br>
                     </p>
                     <p class="block-text mbr-fonts-style display-2"><b><u><i>Server Side</i></u></b></p> 
@@ -206,7 +206,7 @@
                     
                                     <button onclick="myFunction('client2')" class="w3-button w3-block w3-left-align w3-light-grey w3-border">
                                         <p class="block-text mbr-fonts-style display-7">                    
-                                             <b><br>■ Visual display *** TBC ***</b><br>                    
+                                             <b><br>■ Visuals *** TBC ***</b><br>                    
                                         </p>                      
                                     </button>
                                         <div id="client2" class="w3-hide w3-container">
@@ -215,25 +215,26 @@
                     
                                     <button onclick="myFunction('client3')" class="w3-button w3-block w3-left-align w3-light-grey w3-border">
                                         <p class="block-text mbr-fonts-style display-7">                    
-                                             <b><br>■ Collision *** TBC ***</b><br>                    
+                                             <b><br>■ Communication</b><br>                    
                                         </p>                      
                                     </button>
                                         <div id="client3" class="w3-hide w3-container">
-                                          <p>Content..</p>
-                                        </div>                    
-                    
-                                    <button onclick="myFunction('client4')" class="w3-button w3-block w3-left-align w3-light-grey w3-border">
-                                        <p class="block-text mbr-fonts-style display-7">                    
-                                             <b><br>■ *** TBC ***</b><br>                    
-                                        </p>                      
-                                    </button>
-                                        <div id="client4" class="w3-hide w3-container">
-                                          <p>Content..</p>
-                                        </div>
-                         <br><br>
-                    
-                </div>
-
+                                          <p>I wanted to explain how the client handles the communication to the server and this starts within the p5 function setup. Firstly we create a new WebSocket which takes the server address & port as the parameter. Then we create our event listeners, which are socket.onmessage which waits to receive data from the server and when it does, it takes that data and calls a function I created called messageHandler, using the data as a parameter. The other event is the socket.onopen, which waits for the server connection to be established, once this happens the client calls a function sendMsgToServer.
+                                              
+                                              
+                                              <br><br>
+                                              <img src="assets/images/maze-client-connection.png"><br>
+                                              
+                                              If you've read through the server side section above, you will recall that the client receives various kinds of communication, ranging from the User initialisation to the entire Maze layout. One of the questions you might have is, how does the client distinguish <i>what</i> type of data it is receiving? Well a solution I came up with was to send everything to the client as an array and for every object that is sent, that object also sends what 'type' of object it is. So as you can see on the left-hand side of the image below, this makes it very easy for the client to indentify the data by checking the data[0].msgType.<br><br>
+                                              <img src="assets/images/maze-client-comm.png"><br>
+                                              
+                                              As to the function on the right-hand side? Well this is the sendMsgToServer function I mentioned earlier, this function is called almost constantly while the user is connected. It updates the server with the client location, initials, last message (chat system), if it hit an enemy (disc) & finally it's laser position.<br><br>
+                                              
+                                              Overall I'm quite happy with how I structured this, it made adding new features to whole system quite easy. 
+                                              
+                                            </p>
+                                        </div>    
+                    </div>
                 </div>
             </div>
         <hr>
