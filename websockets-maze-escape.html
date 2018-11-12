@@ -215,11 +215,22 @@
                     
                                     <button onclick="myFunction('client2')" class="w3-button w3-block w3-left-align w3-light-grey w3-border">
                                         <p class="block-text mbr-fonts-style display-7">                    
-                                             <b><br>■ Visuals *** TBC ***</b><br>                    
+                                             <b><br>■ Visuals</b><br>                    
                                         </p>                      
                                     </button>
                                         <div id="client2" class="w3-hide w3-container">
-                                          <p>Content..</p>
+                                          <p>For the visuals, I decided to use the P5.js library which is an open source library that is designed for the visual arts community to creating drawings, animations & interactive programs. There are two main components when coding in P5, those are the setup function and the draw function. Within setup we initialise components that only need to be created once (connection to server, creation of canvas, etc). The draw function is a continous loop that repeats itself every frame, so your framerate will determine how often this loop repeats per second. So in this section, i'll give you a brief overview of what happens during my draw function.
+                                            <br><br>
+                                              <b>Centre the player -</b> This is done by using a function called translate, which displaces the objects by the parameter you set.<br><br>
+                                              <b>Drawing the player -</b> We take the User class that's created by the server initialisation message, draw an ellipse at it's X,Y position & fill it with the RGB value given. We then check if the user has said anything within the past 6 seconds and if they have, draw that text centred above the X,Y position.<br><br>
+                                              <b>Drawing the laser -</b> First off, we have a boolean which becomes 'true' only when the spacebar is held down, so it checks that value before it draws anything. By default the laser is extended 3 times the distance between your X,Y position and your mouse position. So firstly we check if the laser hit a wall and if it has, set the end location to the position that did so.<br><br>
+                                              <b>Drawing the pointer -</b> I start by getting the angle between the users X,Y position and their mouse position, using the function atan2 (https://en.wikipedia.org/wiki/Atan2). Once I have this value, I draw a triangle in the centre of the screen, offset by the radius of the circle. This triangle is then rotated using the angle calculated to keep it always pointing in this position. It's also work noting the user of the push() and pop() function here, this seperates the codeblock from the rest of the items in draw, to ensure the whole screen isn't being constantly rotated by this angle too.<br>
+                                              <img src="assets/images/mazepointer.gif"><br>
+                                              <b>Drawing the maze -</b> For this we loop through the array of walls, received from their server. Each line requires 4 parameters and are drawn as follows line(walls[i].x1, walls[i].y1, walls[i].x2, walls[i].y2). Whilst the walls are being drawn, we also check if the player position is within the line (due to them moving) and if it is, we send them back to their previous position prior to moving.<br><br>
+                                              <b>Drawing other players -</b> This uses the same technique as drawing ourselves, except we loop through the array of users and use their values insteads.<br><br>
+                                              <b>Drawing the enemies -</b> While this is similar to the above, there are a couple of key differences. The first is that we draw an image in the location rather than ellipse but the primary difference is in regards to collision. As mentioned before users can shoot the enemies down, so we check to see if the laser is touching the disc and if it is, remove that disc and report it back to the server. The other collision is player collision, so we also check if this occurs and if it does, send the user back to the starting location.
+                                            
+                                            </p>
                                         </div>
                     
                                     <button onclick="myFunction('client3')" class="w3-button w3-block w3-left-align w3-light-grey w3-border">
