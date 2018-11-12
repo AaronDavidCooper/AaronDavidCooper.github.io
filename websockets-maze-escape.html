@@ -197,11 +197,20 @@
 
                                                         <button onclick="myFunction('client1')" class="w3-button w3-block w3-left-align w3-light-grey w3-border">
                                         <p class="block-text mbr-fonts-style display-7">                    
-                                             <b><br>■ User Input *** TBC ***</b><br>                    
+                                             <b><br>■ User Input</b><br>                    
                                         </p>                      
                                     </button>
                                         <div id="client1" class="w3-hide w3-container">
-                                          <p>Content..</p>
+                                          <p>While this project doesn't require too many inputs from the user, I did want to quickly explain the inputs it does allow. The idea was for this to be a simplistic game that everyone would be able to use, so on the main menu I highlight the few key inputs required to help them. Once they connect to the maze, I also have a reminder of how to use the laser. The reasoning for this is due to user feedback, almost every person who has tried Maze Escape was able to move around without any issues but some of them couldn't remember how to fire the laser and I didn't want them to reload the game to figure out how.
+                                              <br><br>
+                                              
+                                              <img src="assets/images/maze-chat-input.png"><br>
+                                              
+                                              <b>Chat system -</b> Firstly, I wanted a chat system that was integrated into the display, to acomplish this i created a javascript DOM element that overlays the display and centralised it towards the bottom of the screen. Once I was happy with the position, I needed to decide how the user accessed this and the two obvious ways were the 'Enter' key and also clicking into the input box. This presented an issue though, as the user would move around on the screen whilst typing. My initial solution was to use the .onFocus event to check if the chatbox was active but unfortunately as this was a JavaScript DOM element, this function isn't available. So my solution was to create a boolean called 'typing' and only allow the user to interact with the game if this was false.
+                                              <br><br>
+                                              <b>Mobility -</b> The game uses W,A,S,D and every frame the game calls a function, checkMovement. This function firstly checks if the user is typing, then checks which  key is being held down. I used this website (https://css-tricks.com/snippets/javascript/javascript-keycodes/#article-header-id-1) to find the keyCode that corresponds to the keys I wanted to check. If the user was pressing W,A,S or D then it moved their X,Y co-ordinates accordingly.
+                                            
+                                            </p>
                                         </div>
                     
                                     <button onclick="myFunction('client2')" class="w3-button w3-block w3-left-align w3-light-grey w3-border">
@@ -220,7 +229,6 @@
                                     </button>
                                         <div id="client3" class="w3-hide w3-container">
                                           <p>I wanted to explain how the client handles the communication to the server and this starts within the p5 function setup. Firstly we create a new WebSocket which takes the server address & port as the parameter. Then we create our event listeners, which are socket.onmessage which waits to receive data from the server and when it does, it takes that data and calls a function I created called messageHandler, using the data as a parameter. The other event is the socket.onopen, which waits for the server connection to be established, once this happens the client calls a function sendMsgToServer.
-                                              
                                               
                                               <br><br>
                                               <img src="assets/images/maze-client-connection.png"><br>
